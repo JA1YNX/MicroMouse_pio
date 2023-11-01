@@ -42,6 +42,14 @@ class MicroMouse_oswELE
 {
 private:
     Pos_info posInfo[16][16]; //(x, y)に対応
+    void get_neighbor_Pos_info(Pos_info& _current, Pos_info* _neighbors);
+
+    void go_f();
+    void go_r();
+    void go_l();
+    void go_b();
+    
 public:
     MicroMouse_oswELE();
+    void go_next(Moved_dir _last_md,Pos_info& _current, Pos_info* next);// return next posinfo
 };
