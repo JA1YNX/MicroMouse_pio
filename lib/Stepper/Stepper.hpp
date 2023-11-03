@@ -66,7 +66,7 @@ private:
 public:
     Stepper(Pin_SLA708x _pin, bool _sync, bool _bsel);
     
-    void set_DriveMode(bool _sync, bool _bsel);
+    void setDriveMode(bool _sync, bool _bsel);
     void rotate(float _duty);
 };
 #endif
