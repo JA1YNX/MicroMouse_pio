@@ -65,9 +65,15 @@ Stepper::Stepper(Pin_SLA708x _pin, bool _sync, bool _bsel):pin(_pin), sync(_sync
     digitalWrite(pin.p_ref, 0);
     digitalWrite(pin.p_reset, 0);
     digitalWrite(pin.p_SYNC, 0);
+    
+    pwmSetup(freq);
 
-    ledcSetup(0, freq, resolution);
-    ledcWrite(0, 0);
+    ledcAttachPin(pin.p_inA, chA);
+    ledcAttachPin(pin.p_inA_, chA_);
+    ledcAttachPin(pin.p_inB, chB);
+    ledcAttachPin(pin.p_inB_, chB_);
+    
+    rotate(0);
 
     setDriveMode(sync, bsel);
 }
@@ -80,8 +86,18 @@ void Stepper::setDriveMode(bool _sync, bool _bsel){
 }
 
 void Stepper::rotate(float _duty){
-    
-    ledcWrite(0, (int)(_duty*resolution));
+    ledcWrite(chA, _duty >= 0 ? (int)(_duty*resolution10) : 0);
+    ledcWrite(chA_, _duty < 0 ? (int)(_duty*resolution10) : 0);
+    ledcWrite(chB, _duty >= 0 ? 0 :(int)(_duty*resolution10));
+    ledcWrite(chB_, _duty < 0 ? 0 :(int)(_duty*resolution10));
+}
+
+void Stepper::pwmSetup(uint16_t _freq){
+    freq = _freq;
+    ledcSetup(0, freq, resolution);
+    ledcSetup(1, freq, resolution);
+    ledcSetup(2, freq, resolution);
+    ledcSetup(3, freq, resolution);
 }
 
 #endif

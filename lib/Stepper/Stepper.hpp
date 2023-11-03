@@ -4,7 +4,7 @@
 #include "uMouse_setting.hpp"
 
 constexpr uint8_t resolution = 10;
-constexpr uint8_t freq = 1000;
+uint16_t resolution10 = pow(2.0f, resolution);//10進
 
 #if USING_707x // main.cppやどこかでマクロ定義によってやっていただければ
 
@@ -33,6 +33,8 @@ class Stepper
 private:
     Pin_SLA707x pin;
     driveMode d_Mode;
+
+    uint16_t freq = 1000;
 
 public:
     Stepper(Pin_SLA707x _pin, driveMode _dm);
@@ -63,10 +65,21 @@ private:
     bool sync;
     bool bsel;
 
+    enum {
+        chA,
+        chA_,
+        chB,
+        chB_
+    };
+
+    uint16_t freq = 1000;
+
 public:
     Stepper(Pin_SLA708x _pin, bool _sync, bool _bsel);
     
     void setDriveMode(bool _sync, bool _bsel);
     void rotate(float _duty);
+
+    void pwmSetup(uint16_t _freq);
 };
 #endif
