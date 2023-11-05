@@ -1,16 +1,20 @@
 #pragma once
 
+/*
+
 #include <ArduinoEigen.h>
+#include "Stepper.hpp"
+#include "uMouse_setting.hpp"
 using namespace std;
 using namespace Eigen;
 
-typedef struct{
-    int none = 0;
-    int forward = 1;
-    int right = 2;
-    int left = 3;
-    int back = 4;
-}Moved_dir;
+enum Moved_dir{
+    none,
+    forward,
+    right,
+    left,
+    back
+};
 
 typedef struct{
     int none = 0;
@@ -44,12 +48,12 @@ private:
     Pos_info posInfo[16][16]; //(x, y)に対応
     void get_neighbor_Pos_info(Pos_info& _current, Pos_info* _neighbors);
 
-    void go_f();
-    void go_r();
-    void go_l();
-    void go_b();
+    Stepper MotorR;
+    Stepper MotorL;
     
 public:
     MicroMouse_oswELE();
-    void go_next(Moved_dir _last_md,Pos_info& _current, Pos_info* next);// return next posinfo
+    void go_next(Moved_dir _last_md, Pos_info& _current, Pos_info* next);// return next posinfo
 };
+
+*/

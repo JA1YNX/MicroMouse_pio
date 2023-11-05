@@ -1,7 +1,8 @@
+/*
+
 #include "MicroMouse_oswELE.hpp"
 
-MicroMouse_oswELE::MicroMouse_oswELE()
-{
+MicroMouse_oswELE::MicroMouse_oswELE(){
     //init pos
     for(int x = 0; x < 16; x++){
         for(int y = 0; y < 16; y++){
@@ -34,7 +35,8 @@ void MicroMouse_oswELE::go_next(Moved_dir _last_md, Pos_info& _current, Pos_info
     {
     case Moved_dir::forward:
         if(nexts[0].step > nexts[1].step){
-            go_f();
+            MotorR.rotate(0.5f);
+            MotorL.rotate(0.5f);
         }
         
         break;
@@ -43,3 +45,5 @@ void MicroMouse_oswELE::go_next(Moved_dir _last_md, Pos_info& _current, Pos_info
         break;
     }
 }
+
+*/

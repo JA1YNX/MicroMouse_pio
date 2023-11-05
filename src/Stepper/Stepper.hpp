@@ -3,9 +3,6 @@
 #include <Arduino.h>
 #include "uMouse_setting.hpp"
 
-constexpr uint8_t resolution = 10;
-uint16_t resolution10 = pow(2.0f, resolution);//10進
-
 #if USING_707x // main.cppやどこかでマクロ定義によってやっていただければ
 
 typedef struct{
@@ -30,18 +27,18 @@ enum driveMode{
 
 class Stepper
 {
-private:
-    Pin_SLA707x pin;
-    driveMode d_Mode;
-
-    uint16_t freq = 1000;
-
 public:
     Stepper(Pin_SLA707x _pin, driveMode _dm);
     
     void set_DriveMode(driveMode _dm);
 
     void rotate(float _duty);
+
+private:
+    Pin_SLA707x pin;
+    driveMode d_Mode;
+
+    uint16_t freq = 1000;
 };
 
 #else
