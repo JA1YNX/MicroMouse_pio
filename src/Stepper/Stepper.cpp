@@ -24,10 +24,14 @@ Stepper::Stepper(Pin_SLA707x _pin, driveMode _dm):pin(_pin), d_Mode(_dm)
     ledcAttachPin(pin.p_CLOCK, 0);
     ledcWrite(0, 0);
 
-    bool driveMode[3] = {d_Mode%4%2, d_Mode%4/2, d_Mode/4};
-    digitalWrite(pin.p_M1, driveMode[0]);
-    digitalWrite(pin.p_M2, driveMode[1]);
-    digitalWrite(pin.p_M3, driveMode[2]);
+    //bool driveMode[3] = {d_Mode%4%2, d_Mode%4/2, d_Mode/4};
+    //digitalWrite(pin.p_M1, driveMode[0]);
+    //digitalWrite(pin.p_M2, driveMode[1]);
+    //digitalWrite(pin.p_M3, driveMode[2]);
+
+    digitalWrite(pin.p_M1, 1);
+    digitalWrite(pin.p_M2, 0);
+    digitalWrite(pin.p_M3, 0);
 }
 
 void Stepper::set_DriveMode(driveMode _dm){
@@ -40,7 +44,7 @@ void Stepper::set_DriveMode(driveMode _dm){
 
 void Stepper::rotate(float _duty){
     digitalWrite(pin.p_dir, _duty >= 0);
-    ledcWrite(0, (int)(_duty*resolution));
+    ledcWrite(0, (int)(abs(_duty)*resolution));
 }
 
 #else

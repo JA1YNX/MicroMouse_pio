@@ -11,16 +11,13 @@ uint8_t p_dir = 22;
 uint8_t p_SYNC= 23;
 uint8_t p_Flag = 34;
 
+void u_main(){
+  Stepper m({2, 4, 16, 13, 15, 21, 22, 23}, driveMode::dual_ModeF);
 
-void u_main();
+  m.rotate(0.5f);
+}
 
 void setup() {
   u_main();
 }
-
 void loop() {}
-
-void u_main(){
-  Stepper m({6, 9, 10, 13, 15, 21, 22, 23}, driveMode::dual_ModeF);
-
-}
