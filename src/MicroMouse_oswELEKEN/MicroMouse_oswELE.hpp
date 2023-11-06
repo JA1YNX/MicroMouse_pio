@@ -1,12 +1,17 @@
 #pragma once
 
-/*
-
+#include <Arduino.h>
 #include <ArduinoEigen.h>
-#include "Stepper.hpp"
+#include <FS.h>
+#include <SPIFFS.h>
+#include "Stepper/Stepper.hpp"
 #include "uMouse_setting.hpp"
+
 using namespace std;
 using namespace Eigen;
+using namespace fs;
+
+const String path = "/uMouseMap.txt";
 
 enum Moved_dir{
     none,
@@ -36,7 +41,7 @@ typedef struct{
 }WallType;
 
 typedef struct {
-    Vector2d pos;//2次元ベクトル
+    Vector2i pos;//2次元ベクトル
     int step;
     WallType wallType;
     Moved_dir movedDir;
@@ -46,14 +51,12 @@ class MicroMouse_oswELE
 {
 private:
     Pos_info posInfo[16][16]; //(x, y)に対応
-    void get_neighbor_Pos_info(Pos_info& _current, Pos_info* _neighbors);
+    void get_neighbor_Pos_info(Vector2i& _current, Pos_info* _neighbors);
 
     Stepper MotorR;
     Stepper MotorL;
     
 public:
-    MicroMouse_oswELE();
-    void go_next(Moved_dir _last_md, Pos_info& _current, Pos_info* next);// return next posinfo
+    MicroMouse_oswELE(Pin_SLA707x _pin_motorR, Pin_SLA707x _pin_motorL, driveMode _dm);
+    void go_next(Moved_dir _last_md, Vector2i& _current, Pos_info* next);// return next posinfo
 };
-
-*/
