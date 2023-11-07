@@ -39,6 +39,7 @@ private:
     driveMode d_Mode;
 
     uint16_t freq = 1000;
+    signed long int num_steped = 0;
 };
 
 #else
