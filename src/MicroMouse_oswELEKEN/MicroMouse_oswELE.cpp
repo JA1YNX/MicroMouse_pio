@@ -1,6 +1,7 @@
 #include "MicroMouse_oswELEKEN/MicroMouse_oswELE.hpp"
 
-MicroMouse_oswELE::MicroMouse_oswELE(Pin_SLA707x _pin_motorR, Pin_SLA707x _pin_motorL, driveMode _dm): MotorR(_pin_motorR, _dm), MotorL(_pin_motorL,_dm){
+MicroMouse_oswELE::MicroMouse_oswELE(Pin_SLA707x _pin_motorR, Pin_SLA707x _pin_motorL, driveMode _dm): MotorR(_pin_motorR, _dm), MotorL(_pin_motorL,_dm), imu(BNO055(BNOrate))
+{
     //init pos
     for(int x = 0; x < 16; x++){
         for(int y = 0; y < 16; y++){
@@ -90,5 +91,32 @@ void MicroMouse_oswELE::go_forward(){
 }
 
 void MicroMouse_oswELE::go_right(){
-    
+    while (imu.getDegrees()>= -91.0f && imu.getDegrees() <= -89.0f)
+    {
+        MotorL.rotate(0.5f);
+        MotorR.rotate(-0.5f);   
+    }
+
+    go_forward();
+}
+
+void MicroMouse_oswELE::go_left(){
+    while (imu.getDegrees()>= 89.0f && imu.getDegrees() <= 91.0f)
+    {
+        MotorL.rotate(0.5f);
+        MotorR.rotate(-0.5f);   
+    }
+
+    go_forward();
+}
+
+
+void MicroMouse_oswELE::go_left(){
+    while (imu.getDegrees()>= 179.0f && imu.getDegrees() <= -179.0f)
+    {
+        MotorL.rotate(0.5f);
+        MotorR.rotate(-0.5f);   
+    }
+
+    go_forward();
 }

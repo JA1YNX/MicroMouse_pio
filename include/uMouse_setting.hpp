@@ -1,5 +1,7 @@
 #pragma once
 
+#define BNOrate 20
+
 #define USING_707x (true)
 
 #define pin_MotorR 15

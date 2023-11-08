@@ -3,11 +3,6 @@
 #include <Arduino.h>
 #include <Ticker.h>
 
-// variables for high resolution timer interrupt
-/*volatile int interruptCounter;
-hw_timer_t *timer = NULL;
-portMUX_TYPE timerMux = portMUX_INITIALIZER_UNLOCKED;*/
-
 class BNO055{
 public:
     BNO055(uint16_t _internal);

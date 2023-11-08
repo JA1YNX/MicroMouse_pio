@@ -57,7 +57,7 @@ private:
     Stepper MotorR;
     Stepper MotorL;
 
-    BNO055 imu(20);
+    BNO055 imu;
 
     void go_forward();
     void go_right();
