@@ -13,7 +13,7 @@ using namespace fs;
 
 const String path = "/uMouseMap.txt";
 
-enum Moved_dir{
+enum Move_dir{
     none,
     forward,
     right,
@@ -44,7 +44,7 @@ typedef struct {
     Vector2i pos;//2次元ベクトル
     int step;
     WallType wallType;
-    Moved_dir movedDir;
+    Move_dir movedDir;
 } Pos_info;
 
 class MicroMouse_oswELE
@@ -55,8 +55,13 @@ private:
 
     Stepper MotorR;
     Stepper MotorL;
+
+    void go_forward();
+    void go_right();
+    void go_left();
+    void go_back();
     
 public:
     MicroMouse_oswELE(Pin_SLA707x _pin_motorR, Pin_SLA707x _pin_motorL, driveMode _dm);
-    void go_next(Moved_dir _last_md, Vector2i& _current, Pos_info* next);// return next posinfo
+    void go_next(Move_dir _last_md, Vector2i& _current, Pos_info* next);// return next posinfo
 };
