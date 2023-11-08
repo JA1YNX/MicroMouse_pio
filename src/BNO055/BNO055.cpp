@@ -9,7 +9,7 @@ BNO055::BNO055(uint16_t _internal):internal(_internal), ticker(Ticker())
 
     delay(20);
     
-    ticker.attach_ms<BNO055*>(internal, [](BNO055* ptr){ptr->tick();});
+    ticker.attach_ms<BNO055*>(internal, [](BNO055* ptr){ptr->tick();}, this);
 
     // generate timer (Timer Number, 80MHz / divider, count up=true,down=false)
     //timer is generated hear and defined as global
