@@ -6,6 +6,7 @@
 #include <SPIFFS.h>
 #include "Stepper/Stepper.hpp"
 #include "uMouse_setting.hpp"
+#include "BNO055/BNO055.hpp"
 
 using namespace std;
 using namespace Eigen;
@@ -55,6 +56,8 @@ private:
 
     Stepper MotorR;
     Stepper MotorL;
+
+    BNO055 imu(20);
 
     void go_forward();
     void go_right();

@@ -14,14 +14,15 @@ public:
 
     //度数法で値を取得
     float getDegrees();
+
+    //受信割り込み
+    void tick();
     
 private:
     uint16_t internal;
     Ticker ticker;
     //値をリクエスト
     void requestValue();
-    //受信割り込み
-    void interrupt();
 
     //レジスタ1バイト分を書き込む
     void writeByte(unsigned char reg_add, unsigned char value);

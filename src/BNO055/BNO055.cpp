@@ -1,7 +1,7 @@
 #include "BNO055/BNO055.hpp"
 #include <math.h>
 
-BNO055::BNO055(uint16_t _internal):internal(_internal)
+BNO055::BNO055(uint16_t _internal):internal(_internal), ticker(Ticker())
 {
     Serial1.begin(115200);
     
@@ -9,7 +9,7 @@ BNO055::BNO055(uint16_t _internal):internal(_internal)
 
     delay(20);
     
-    ticker.attach_ms(internal, [&]{interrupt();});
+    ticker.attach_ms<BNO055*>(internal, [](BNO055* ptr){ptr->tick();});
 
     // generate timer (Timer Number, 80MHz / divider, count up=true,down=false)
     //timer is generated hear and defined as global
@@ -32,10 +32,10 @@ void BNO055::writeByte(unsigned char reg_add, unsigned char value){
 void BNO055::requestValue(){
     char data[] = {START_BYTE, READ_BYTE, TARGET_REGISTER, 0x02};
     Serial1.write(data, 4);
-    ticker.attach_ms(internal, [this]{interrupt();});
+    ticker.attach_ms<BNO055*>(internal, [](BNO055* ptr){ptr->tick();});
 }
 
-void BNO055::interrupt(){
+void BNO055::tick(){
     char c;
     Serial1.read(&c, 1);
 
@@ -70,7 +70,6 @@ void BNO055::interrupt(){
     }
 }
 
-
 void BNO055::updateValue(){
     int new_value = (int16_t(receive_buffer[1]) << 8) | int16_t(receive_buffer[0]);
 
@@ -87,7 +86,6 @@ void BNO055::updateValue(){
 void BNO055::reset(int value){
     zero_point = raw_value - value;
 }
-
 
 int BNO055::getValue(){
     return raw_value - zero_point;
