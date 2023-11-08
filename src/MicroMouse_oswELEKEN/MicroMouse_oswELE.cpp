@@ -88,3 +88,7 @@ void MicroMouse_oswELE::go_forward(){
     MotorL.rotate(0.5f);
     MotorR.rotate(0.5f);
 }
+
+void MicroMouse_oswELE::go_right(){
+    
+}
