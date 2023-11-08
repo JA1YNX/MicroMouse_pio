@@ -1,3 +1,5 @@
+#pragma once
+
 #define USING_707x (true)
 
 #define pin_MotorR 15

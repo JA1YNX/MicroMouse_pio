@@ -1,9 +1,12 @@
-#include <Arduino.h>
+#pragma once
 
-// variables for timer interrupt
-volatile int interruptCounter;
+#include <Arduino.h>
+#include <Ticker.h>
+
+// variables for high resolution timer interrupt
+/*volatile int interruptCounter;
 hw_timer_t *timer = NULL;
-portMUX_TYPE timerMux = portMUX_INITIALIZER_UNLOCKED;
+portMUX_TYPE timerMux = portMUX_INITIALIZER_UNLOCKED;*/
 
 class BNO055{
 public:
@@ -13,6 +16,8 @@ public:
     float getDegrees();
     
 private:
+    uint16_t internal;
+    Ticker ticker;
     //値をリクエスト
     void requestValue();
     //受信割り込み
@@ -65,7 +70,4 @@ private:
     unsigned int receive_length = 0;
 
     bool started = false;
-public:
-    void get_Euler(float* _roll_deg, float* _pitch_deg, float* _yaw_deg);
-
 };

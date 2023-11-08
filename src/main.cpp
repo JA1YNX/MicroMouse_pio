@@ -6,7 +6,7 @@ void u_main(){
   //Stepper m({2, 4, 16, 13, 15, 21, 22, 23}, driveMode::dual_ModeF);
   //m.rotate(0.5f);
 
-  MicroMouse_oswELE uMouse();
+  //MicroMouse_oswELE uMouse();
 }
 
 void setup() {

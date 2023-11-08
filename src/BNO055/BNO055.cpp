@@ -1,9 +1,7 @@
 #include "BNO055/BNO055.hpp"
-
-#include "BNO055.hpp"
 #include <math.h>
 
-BNO055::BNO055(uint16_t internal)
+BNO055::BNO055(uint16_t _internal):internal(_internal)
 {
     Serial1.begin(115200);
     
@@ -11,11 +9,14 @@ BNO055::BNO055(uint16_t internal)
 
     delay(20);
     
+    ticker.attach_ms(internal, [&]{interrupt();});
+
     // generate timer (Timer Number, 80MHz / divider, count up=true,down=false)
     //timer is generated hear and defined as global
-    timer = timerBegin(0, 80, true);
-    timerAttachInterrupt(timer, [&]{interrupt();}, true);
+    /*timer = timerBegin(0, 80, true);
+    timerAttachInterrupt(timer, &this->interrupt, true);
     timerAlarmWrite(timer, internal, true);
+    timerAlarmEnable(timer);*/
 
     while(!started){
         delayMicroseconds(1);
@@ -31,12 +32,12 @@ void BNO055::writeByte(unsigned char reg_add, unsigned char value){
 void BNO055::requestValue(){
     char data[] = {START_BYTE, READ_BYTE, TARGET_REGISTER, 0x02};
     Serial1.write(data, 4);
-    serial.attach([this]{interrupt();});
+    ticker.attach_ms(internal, [this]{interrupt();});
 }
 
 void BNO055::interrupt(){
     char c;
-    serial.read(&c, 1);
+    Serial1.read(&c, 1);
 
     switch (receive_process)
     {
