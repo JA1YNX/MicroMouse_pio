@@ -4,13 +4,13 @@
 #include "Stepper/Stepper.hpp"
 #include "BNO055/BNO055.hpp"
 
-enum Move_dir{
-    none,
-    forward,
-    right,
-    left,
-    back
-};
+typedef struct {
+    const int none = 0;
+    const int forward = 1;
+    const int right = 2;
+    const int left = 4;
+    const int back = 8;
+}Move_dir ;
 
 class uMouse_foot{
 public:

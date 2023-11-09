@@ -2,6 +2,10 @@
 
 uM_ele::uM_ele(Pin_SLA707x _pin_motorR, Pin_SLA707x _pin_motorL, driveMode _dm): ashi(_pin_motorL, _pin_motorR, _dm)
 {
+    pinMode(p_trR, INPUT);
+    pinMode(p_trF, INPUT);
+    pinMode(p_trL, INPUT);
+
     //init pos
     for(int x = 0; x < 16; x++){
         for(int y = 0; y < 16; y++){
@@ -115,4 +119,16 @@ void uM_ele::ashi_watchDog(){
     
 }
 
-WallType uM_ele::watch_wall
+uint8_t uM_ele::watch_wall(Move_dir _lastdir){
+    bool is_wall[3] = {digitalRead(p_trF), digitalRead(p_trR), digitalRead(p_trL)};
+
+    switch ()
+    {
+    case Move_dir::forward:
+        return Move_dir::forward * is_wall[0] + Move_dir::right * is_wall[1] + Move_dir::left * is_wall[2];-
+        break;
+    
+    default:
+        break;
+    }
+}

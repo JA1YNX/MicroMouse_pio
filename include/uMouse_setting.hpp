@@ -28,3 +28,7 @@ constexpr uint8_t p_reset_2 = 21;
 constexpr uint8_t p_dir_2 = 22;
 constexpr uint8_t p_SYNC_2 = 23;
 constexpr uint8_t p_Flag_2 = 34;
+
+constexpr uint8_t p_trR = 24;
+constexpr uint8_t p_trF = 25;
+constexpr uint8_t p_trL = 26;

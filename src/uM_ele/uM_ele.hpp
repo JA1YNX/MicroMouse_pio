@@ -54,8 +54,8 @@ private:
     Vector2i currentPosonMap = Vector2i(0,0);
 
 public:
-    MicroMouse_oswELE(Pin_SLA707x _pin_motorR, Pin_SLA707x _pin_motorL, driveMode _dm);
+    uM_ele(Pin_SLA707x _pin_motorR, Pin_SLA707x _pin_motorL, driveMode _dm);
     
     void go_next(Move_dir _last_md, Vector2i& _current, Pos_info* next);// return next posinfo
-    WallType watch_wall();
+    uint8_t watch_wall(Move_dir _last_md);
 };
