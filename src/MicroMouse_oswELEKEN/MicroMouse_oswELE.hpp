@@ -7,7 +7,6 @@
 
 #include "uMouse_foot/uMouse_foot.hpp"
 #include "uMouse_setting.hpp"
-#include "BNO055/BNO055.hpp"
 
 using namespace std;
 using namespace Eigen;
@@ -47,10 +46,10 @@ private:
     Pos_info posInfo[16][16]; //(x, y)に対応
     void get_neighbor_Pos_info(Vector2i& _current, Pos_info* _neighbors);
 
-    BNO055 imu;
     uMouse_foot ashi;
     
 public:
     MicroMouse_oswELE(Pin_SLA707x _pin_motorR, Pin_SLA707x _pin_motorL, driveMode _dm);
     
+    void go_next(Move_dir _last_md, Vector2i& _current, Pos_info* next);// return next posinfo
 };

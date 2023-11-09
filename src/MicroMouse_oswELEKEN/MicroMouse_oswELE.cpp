@@ -1,6 +1,6 @@
 #include "MicroMouse_oswELEKEN/MicroMouse_oswELE.hpp"
 
-MicroMouse_oswELE::MicroMouse_oswELE(Pin_SLA707x _pin_motorR, Pin_SLA707x _pin_motorL, driveMode _dm): MotorR(_pin_motorR, _dm), MotorL(_pin_motorL,_dm), imu(BNO055(BNOrate))
+MicroMouse_oswELE::MicroMouse_oswELE(Pin_SLA707x _pin_motorR, Pin_SLA707x _pin_motorL, driveMode _dm): ashi(_pin_motorL, _pin_motorR, _dm)
 {
     //init pos
     for(int x = 0; x < 16; x++){
