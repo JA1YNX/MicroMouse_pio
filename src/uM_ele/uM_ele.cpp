@@ -1,6 +1,6 @@
-#include "MicroMouse_oswELEKEN/MicroMouse_oswELE.hpp"
+#include "uM_ele/uM_ele.hpp"
 
-MicroMouse_oswELE::MicroMouse_oswELE(Pin_SLA707x _pin_motorR, Pin_SLA707x _pin_motorL, driveMode _dm): ashi(_pin_motorL, _pin_motorR, _dm)
+uM_ele::uM_ele(Pin_SLA707x _pin_motorR, Pin_SLA707x _pin_motorL, driveMode _dm): ashi(_pin_motorL, _pin_motorR, _dm)
 {
     //init pos
     for(int x = 0; x < 16; x++){
@@ -28,10 +28,12 @@ MicroMouse_oswELE::MicroMouse_oswELE(Pin_SLA707x _pin_motorR, Pin_SLA707x _pin_m
         }
     }
     
+    timer = timerBegin(0, 80, true);
+    timerAttachInterrupt(timer, [this]{ashi_watchDog();}, true);
 }
 
 // F R L Bの順で返す
-void MicroMouse_oswELE::get_neighbor_Pos_info(Vector2i& _current, Pos_info* _neighbors){
+void uM_ele::get_neighbor_Pos_info(Vector2i& _current, Pos_info* _neighbors){
     *(_neighbors)       = posInfo[_current.x()  ][_current.y()+1];
     *(_neighbors + 1)   = posInfo[_current.x()+1][_current.y()];
     *(_neighbors + 2)   = posInfo[_current.x()-1][_current.y()];
@@ -39,7 +41,7 @@ void MicroMouse_oswELE::get_neighbor_Pos_info(Vector2i& _current, Pos_info* _nei
 }
 
 //_last_moveddirで一つ飛ばしたい。
-void MicroMouse_oswELE::go_next(Move_dir _last_md, Vector2i& _current, Pos_info* _next){
+void uM_ele::go_next(Move_dir _last_md, Vector2i& _current, Pos_info* _next){
     Pos_info nexts[4];
     get_neighbor_Pos_info(_current, &nexts[0]);
 
@@ -84,3 +86,33 @@ void MicroMouse_oswELE::go_next(Move_dir _last_md, Vector2i& _current, Pos_info*
         break;
     }
 }
+
+void uM_ele::ashi_watchDog(){
+    float currentPos[2];
+    ashi.get_pos(&currentPos[0]);
+
+    if(lastpos.x() - currentPos[0] >= 162){
+        currentPosonMap.x()++;
+        go_next();
+    }
+    else if (lastpos.x() - currentPos[0] <= -162)
+    {
+        currentPosonMap.x()--;
+        go_next();
+    }
+    else if (lastpos.y() - currentPos[1] >= 162)
+    {
+        currentPosonMap.y()++;
+        go_next();
+    }
+    else if (lastpos.y() - currentPos[1] <= -162)
+    {
+        currentPosonMap.x()++;
+        go_next();
+    }
+    
+    
+    
+}
+
+WallType uM_ele::watch_wall

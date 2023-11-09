@@ -40,7 +40,7 @@ typedef struct {
     Move_dir movedDir;
 } Pos_info;
 
-class MicroMouse_oswELE
+class uM_ele
 {
 private:
     Pos_info posInfo[16][16]; //(x, y)に対応
@@ -48,8 +48,14 @@ private:
 
     uMouse_foot ashi;
     
+    hw_timer_t* timer;
+    void ashi_watchDog();
+    Vector2f lastpos;
+    Vector2i currentPosonMap = Vector2i(0,0);
+
 public:
     MicroMouse_oswELE(Pin_SLA707x _pin_motorR, Pin_SLA707x _pin_motorL, driveMode _dm);
     
     void go_next(Move_dir _last_md, Vector2i& _current, Pos_info* next);// return next posinfo
+    WallType watch_wall();
 };
