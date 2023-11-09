@@ -34,6 +34,8 @@ public:
 
     void rotate(float _duty);
 
+    signed long int get_numStepped(){ return num_steped;}
+
 private:
     Pin_SLA707x pin;
     driveMode d_Mode;

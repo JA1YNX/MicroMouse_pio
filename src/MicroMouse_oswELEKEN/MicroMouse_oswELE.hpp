@@ -4,7 +4,8 @@
 #include <ArduinoEigen.h>
 #include <FS.h>
 #include <SPIFFS.h>
-#include "Stepper/Stepper.hpp"
+
+#include "uMouse_foot/uMouse_foot.hpp"
 #include "uMouse_setting.hpp"
 #include "BNO055/BNO055.hpp"
 
@@ -13,14 +14,6 @@ using namespace Eigen;
 using namespace fs;
 
 const String path = "/uMouseMap.txt";
-
-enum Move_dir{
-    none,
-    forward,
-    right,
-    left,
-    back
-};
 
 typedef struct{
     int none = 0;
@@ -54,17 +47,10 @@ private:
     Pos_info posInfo[16][16]; //(x, y)に対応
     void get_neighbor_Pos_info(Vector2i& _current, Pos_info* _neighbors);
 
-    Stepper MotorR;
-    Stepper MotorL;
-
     BNO055 imu;
-
-    void go_forward();
-    void go_right();
-    void go_left();
-    void go_back();
+    uMouse_foot ashi;
     
 public:
     MicroMouse_oswELE(Pin_SLA707x _pin_motorR, Pin_SLA707x _pin_motorL, driveMode _dm);
-    void go_next(Move_dir _last_md, Vector2i& _current, Pos_info* next);// return next posinfo
+    
 };
